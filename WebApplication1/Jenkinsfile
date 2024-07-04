@@ -8,14 +8,14 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://your-repo-url.git' // Replace with your repository URL
+                git 'https://github.com/G1u2r3/Jenkinsfile.git' // Replace with your repository URL
             }
         }
         stage('Restore') {
             steps {
                 script {
                     withEnv(["PATH+DOTNET=${DOTNET_HOME}/bin"]) {
-                        sh 'dotnet restore'
+                        bat 'dotnet restore'
                     }
                 }
             }
@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script {
                     withEnv(["PATH+DOTNET=${DOTNET_HOME}/bin"]) {
-                        sh 'dotnet build --configuration Release'
+                        bat 'dotnet build --configuration Release'
                     }
                 }
             }
@@ -33,7 +33,7 @@ pipeline {
             steps {
                 script {
                     withEnv(["PATH+DOTNET=${DOTNET_HOME}/bin"]) {
-                        sh 'dotnet test'
+                        bat 'dotnet test'
                     }
                 }
             }
@@ -42,7 +42,7 @@ pipeline {
             steps {
                 script {
                     withEnv(["PATH+DOTNET=${DOTNET_HOME}/bin"]) {
-                        sh 'dotnet publish --configuration Release --output ./publish'
+                        bat 'dotnet publish --configuration Release --output ./publish'
                     }
                 }
             }
@@ -50,8 +50,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Example: Copy files to the deployment directory
-                    sh 'cp -r ./publish/* /path/to/deploy'
+                    // Example: Copy files to the deployment directory using xcopy
+                    bat 'xcopy /E /I /Y ./publish \\path\\to\\deploy'
                 }
             }
         }
